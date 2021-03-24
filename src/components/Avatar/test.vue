@@ -1,0 +1,28 @@
+<template>
+    <Avatar url='https://dss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=221521724,481371925&fm=26&gp=0.jpg' :size="100"/>
+</template>
+
+<script>
+
+import Avatar from "./"
+
+
+export default {
+    components:{
+        Avatar
+    },
+    data(){
+      return{
+        
+      }
+    },
+    methods:{
+     
+    }
+
+}
+</script>
+
+<style>
+
+</style>
