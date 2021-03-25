@@ -6,7 +6,7 @@
             v-for="(item,i) in getData.rows" :key="i">
             <RouterLink :to="'/blog/'+item.id">
                 <div class="thumb" v-if="item.thumb">
-                    <img :src="item.thumb" >
+                    <img  v-lazy="item.thumb">
                 </div>
             </RouterLink>
             
@@ -32,10 +32,13 @@
 
       </div>
 
-     
-      <!-- <div class="top">
-          TOP
-      </div> -->
+     <div class="toTop" v-if="!isLoading"  >
+         <div v-show="isShowTop">
+             <ToTop />
+         </div>
+         
+     </div>
+      
   </div>
 </template>
 
@@ -44,10 +47,13 @@ import fetchData from "@/mixins/fetchData.js"
 import {getBlogs} from "@/api/blog.js"
 import Pager from "@/components/Pager"
 import formatDate from "@/utils/formatDate"
+import ToTop from "@/components/ToTop"
+import scrollTop from "@/mixins/scrollTop"
 export default {
-    mixins:[fetchData([])],
+    mixins:[fetchData([]), scrollTop('container')],
     components: {
-        Pager
+        Pager,
+        ToTop
     },
     computed:{
         routeInfo(){
@@ -60,7 +66,7 @@ export default {
         getData(){
             console.log(this.data)
             return this.data
-        }
+        },
     },
     methods: {
         async fetchData(){
@@ -87,10 +93,12 @@ export default {
                 })
             }
         },
-        formatDate
-    },
-    created() {
-        console.log(this.data)
+        formatDate,
+        lazyHandle(e){
+            console.log(this.$refs.container.scrollTop)
+            this.$bus.$emit("lazyScroll");
+
+        }
     },
     watch: {
         async $route() {
@@ -100,7 +108,13 @@ export default {
             this.data = await this.fetchData();
             this.isLoading = false;
         },
-    }
+    },
+    mounted() {
+        this.$refs.container.addEventListener("scroll",this.lazyHandle)
+    },
+    beforeDestroy() {
+        this.$refs.container.removeEventListener("scroll",this.lazyHandle)
+    },
 
 
 }
@@ -140,6 +154,8 @@ export default {
                 display: block;
                 max-width: 200px;
                 border-radius: 5px;
+                height:167px;
+                width:auto;
             }
         }
         .title:hover{
@@ -153,7 +169,6 @@ export default {
             span{
                 margin-right:15px;
             }
-
         }
         .desc{
             margin: 15px 0;
@@ -174,6 +189,11 @@ export default {
             font-size:17px;
             line-height:40px
         }
+    }
+    .toTopContainer{
+        position: fixed;
+        right:50px;
+        bottom: 50px;
     }
     
 }

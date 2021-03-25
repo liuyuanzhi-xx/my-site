@@ -83,9 +83,7 @@ export default {
           this.isTruning = true;
           this.index = newIndex;
         }
-
       }
-
     },
     handleWheel(e){
       

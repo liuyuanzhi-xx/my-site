@@ -1,20 +1,25 @@
 <template>
-<div class="detailContainer" v-if="detailInfo">
-    <div class="hideScroll">
+<div class="detailContainer">
+    <div class="hideScroll" ref="mainContainer">
         <div class="realContainer">
             <h1>{{detailInfo.title}}</h1>
             <div class="aside">
                 <span>日期：{{formatDate(detailInfo.createDate)}}</span>
                 <span>浏览：{{detailInfo.scanNumber}}</span>
-                <span>评论：{{detailInfo.commentNumber}}</span>
+                <a href="#formContainer"><span>评论：{{detailInfo.commentNumber}}</span></a>
                 <RouterLink :to="'/blog/cate/'+detailInfo.category.id"><span>分类：{{detailInfo.category.id}}</span></RouterLink>
             </div>
             <div class="markdown-body" v-html="detailInfo.htmlContent">
-            </div>  
+            </div>
+                <Comment/>  
         </div>
         
 
     </div>
+    <div v-show="isShowTop">
+        <ToTop />
+    </div>
+    
 
 </div>
   
@@ -23,7 +28,16 @@
 <script>
 import formatDate from "@/utils/formatDate.js"
 import "highlight.js/styles/zenburn.css";
+import Comment from "./Comment"
+import debounce from "@/utils/debounce"
+import ToTop from "@/components/ToTop"
+import scrollTop from "@/mixins/scrollTop"
 export default {
+    mixins:[scrollTop('mainContainer')],
+    components:{
+        Comment,
+        ToTop
+    },
     props:{
         detailInfo:{
             type:Object,
@@ -32,7 +46,28 @@ export default {
     },
     methods:{
         formatDate,
-    }
+        handleScroll() {
+            this.$bus.$emit("mainScroll");
+            const around = 20;
+            const bottom = this.$refs.mainContainer.scrollHeight - this.$refs.mainContainer.clientHeight - this.$refs.mainContainer.scrollTop;
+            if(bottom <= around){
+                this.$bus.$emit("scrollBottom")
+            }
+        },
+    },
+    mounted() {
+        this.setHandleScroll = debounce(this.handleScroll, 200);
+        this.$refs.mainContainer.addEventListener("scroll",this.setHandleScroll );
+        const hash = location.hash;
+        location.hash = "";
+        setTimeout(() => {
+        location.hash = hash;
+        }, 1);
+    },
+    beforeDestroy() {
+        this.$refs.mainContainer.removeEventListener("scroll", this.setHandleScroll);
+    },
+
 
 }
 </script>
@@ -51,6 +86,7 @@ export default {
         width:calc(100% + 40px);
         height:100%;
         overflow-y:auto;
+        scroll-behavior: smooth;
         .realContainer{
             width:calc(100% - 40px);
             height:100%;
@@ -66,6 +102,11 @@ export default {
                 margin-right:15px;
             }
         }
+    }
+    .toTopContainer{
+        position:fixed;
+        right:50px;
+        bottom: 50px;
     }
 
 }

@@ -4,11 +4,10 @@
     :class="{
         selected:item.isSelected
     }"
-    @click="handleClick(item)"
     >
-        <span>{{item.name}}</span>
+        <span @click="handleClick(item)">{{item.name}}</span>
         <span v-if="item.aside" class="aside">{{item.aside}}</span>
-        <RightList v-if="item.children" :list="item.children"  @selected ="handleClick"/>
+        <RightList v-if="item.children" :list="item.children"  @selected = "handleClick"/>
     </li>
     
 
@@ -56,13 +55,11 @@ export default {
         line-height: 40px;
         font-size: 14px;
         cursor: pointer;
-        &.selected{
-            span{
-                color:@warn;
-                font-weight: bold;
-            }
+        &.selected>span{
             
-
+            color:@warn;
+            font-weight: bold;
+        
         }
         .aside{
             font-size: 12px;
