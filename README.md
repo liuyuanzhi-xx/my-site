@@ -24,6 +24,6 @@ npm run serve
 
 ### 项目截图
 
-![Image](https://github.com/liuyuanzhi-xx/my-site/blob/master/readmeImg/img1.png)
-![Image](https://github.com/liuyuanzhi-xx/my-site/blob/master/readmeImg/img2.png)
-![Image](https://github.com/liuyuanzhi-xx/my-site/blob/master/readmeImg/img3.png)
+![Image](https://github.com/liuyuanzhi-xx/my-site/blob/main/readmeImg/img1.png)
+![Image](https://github.com/liuyuanzhi-xx/my-site/blob/main/readmeImg/img2.png)
+![Image](https://github.com/liuyuanzhi-xx/my-site/blob/main/readmeImg/img3.png)
