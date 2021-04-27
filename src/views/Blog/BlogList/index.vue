@@ -133,12 +133,12 @@ export default {
     .hideScrool{
         position: relative;
         overflow-y:auto ;
+        overflow-x:hidden ;
         scroll-behavior: smooth;
         width:calc(100% + 40px);
         height:100%;
         
     }
-    .element::-webkit-scrollbar {display:none}
     li{
         display: flex;
         padding: 15px 0;

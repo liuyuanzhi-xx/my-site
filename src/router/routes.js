@@ -5,40 +5,62 @@ import Project from "@/views/Project";
 import Message from "@/views/Message";
 import BlogDetail from "@/views/Blog/BlogDetail"
 
-export default [{
+const router = [{
     name: "Home",
     path: "/",
-    component: Home
+    component: Home,
+    meta: {
+      title: "首页"
+    }
   },
   {
     name: "About",
     path: "/about",
-    component: About
+    component: About,
+    meta: {
+      title: "关于我"
+    }
   },
   {
     name: "Blog",
     path: "/blog",
-    component: Blog
+    component: Blog,
+    meta: {
+      title: "博客"
+    }
   },
   {
     name: "CategoryBlog",
     path: "/blog/cate/:categoryId",
-    component: Blog
+    component: Blog,
+    meta: {
+      title: "博客"
+    }
   },
   {
     name: "BlogDetail",
     path: "/blog/:blogId",
-    component: BlogDetail
+    component: BlogDetail,
+    meta: {
+      title: "博客详情"
+    }
 
   },
   {
     name: "Project",
     path: "/project",
-    component: Project
+    component: Project,
+    meta: {
+      title: "项目&效果"
+    }
   },
   {
     name: "Message",
     path: "/message",
-    component: Message
+    component: Message,
+    meta: {
+      title: "留言板"
+    }
   },
 ];
+export default router;

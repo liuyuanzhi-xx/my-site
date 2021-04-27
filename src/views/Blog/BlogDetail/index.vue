@@ -27,6 +27,7 @@ import fetchData from "@/mixins/fetchData.js"
 import {getBlogDetail} from "@/api/blog.js"
 import Detail from "./Detail"
 import Catalog from "./Catalog"
+import titleController from "@/utils/titleController"
 
 
 export default {
@@ -39,7 +40,11 @@ export default {
     },
     methods:{
         async fetchData(){
-            return await getBlogDetail(this.$route.params.blogId);
+            const res = await getBlogDetail(this.$route.params.blogId);
+            if(res.title){
+                titleController.setSiteTitle(res.title);
+            }
+            return res;
         }
     }
 

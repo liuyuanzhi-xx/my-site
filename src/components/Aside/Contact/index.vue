@@ -1,9 +1,9 @@
 <template>
 <div class="contactContainer">
     <ul>
-        <li v-for="item in items" :key="item.name">
-            <a href="">
-                <Icon :type="item.iconType"/>
+        <li v-for="item in data.info" :key="item.name">
+            <a :href="item.linkTo">
+                <Icon :type="item.name"/>
                 <span>{{item.text}}</span>
             </a>
             <div v-if ="item.qrCode" class="pop">
@@ -20,9 +20,14 @@
 
 <script>
 import Icon from "@/components/Icon"
+import {mapState} from "vuex"
 export default {
     components:{
         Icon
+    },
+    computed:{
+        ...mapState("setting",["data"])
+
     },
     data(){
         return{

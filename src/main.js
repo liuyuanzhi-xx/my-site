@@ -5,6 +5,7 @@ import router from "./router"
 import popMessage from "./utils/popMessage"
 import "./mock";
 import "@/utils/eventBus"
+import titleController from "@/utils/titleController"
 
 
 Vue.config.productionTip = false;
@@ -15,8 +16,12 @@ import vLazy from "./directives/lazy"
 Vue.directive("loading", vLoading)
 Vue.directive("lazy", vLazy)
 
+import store from "@/store"
+store.dispatch("setting/fetchSetting")
 Vue.prototype.popMessage = popMessage;
+
 new Vue({
+  store,
   router,
   render: h => h(App),
 }).$mount('#app')

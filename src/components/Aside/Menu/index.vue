@@ -39,7 +39,7 @@ export default {
                     exact:true
                 },{
                     name:'blog',
-                    titel:"文章",
+                    titel:"博客",
                     iconType:'blog',
                     linkTo:'/blog',
                     exact:false

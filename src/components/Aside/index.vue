@@ -1,12 +1,16 @@
 <template>
-<div class="asideContainer">
-    <Avatar url="http://mdrs.yuanjin.tech/FgMwAPYq17So9nwVH44ltDHo7u3c" :size="80"/>
-    <h1 class="title">龙傲天的小窝</h1>
-    <Menu />
-    <Contact />
-    <p class="footer">
-     
-    </p>
+<div class="asideContainer" v-loading = "loading">
+    <div class="hideScroll">
+        <template v-if="data">
+            <Avatar :url="data.avatar" :size="80"/>
+            <h1 class="title">{{data.siteTitle}}</h1>
+            <Menu />
+            <Contact/>
+            <p class="footer">
+            
+            </p>       
+        </template>
+    </div>
 
 </div>
   
@@ -16,11 +20,15 @@
 import Contact from "./Contact"
 import Menu from "./Menu"
 import Avatar from "@/components/Avatar"
+import {mapState} from "vuex"
 export default {
     components: {
         Contact,
         Menu,
         Avatar
+    },
+    computed:{
+        ...mapState("setting",["loading","data"])
     }
 
 }
@@ -33,11 +41,17 @@ export default {
    height:100%;
    width: 100%;
    background: @dark;
-   padding: 20px 0;
+   padding:20px;
    box-sizing: border-box;
-   overflow-x: hidden;
-   overflow-y: hidden;
-   
+   overflow: hidden;
+   position: relative;
+   .hideScroll{
+        overflow-y: auto;
+        overflow-x: hidden;
+        scroll-behavior: smooth;
+        width: calc(100% + 37px);
+        height: 100%;
+   }
    h1,p{
         text-align: center;
         color: #fff;
@@ -50,7 +64,7 @@ export default {
         margin-top:30px
     }
     .contactContainer{
-        margin-top:60px;
+        margin-top:30px;
         margin-left:20px
 
     }

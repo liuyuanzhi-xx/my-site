@@ -14,11 +14,6 @@ Mock.mock("/api/blogtype", "get", {
 Mock.mock(/^\/api\/blog(\?.+)?$/, "get", function (options) {
   const query = qs.parse(options.url);
 
-  function getColor() {
-    const a = '#' + Random.integer(180, 255).toString(16) +
-      Random.integer(140, 255).toString(16) +
-      Random.integer(120, 220).toString(16)
-  }
 
   return Mock.mock({
     code: 0,

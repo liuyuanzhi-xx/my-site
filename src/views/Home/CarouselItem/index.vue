@@ -22,6 +22,7 @@
 <script>
 import Icon from "@/components/Icon"
 import ImgLoader from "@/components/ImgLoader"
+
 export default {
     components:{
         Icon,
@@ -58,6 +59,7 @@ export default {
                 y: this.containerSize.height / 2,
             };
         },
+        
         
     },
     data(){

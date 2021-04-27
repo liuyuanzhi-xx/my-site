@@ -1,5 +1,5 @@
 <template>
-  <div class="homeContainer" v-loading="isLoading">
+  <div class="homeContainer" v-loading="loading">
     <div class="up btn"  
     @click="trunTo(index-1)"
     v-if="data.length>0"
@@ -41,14 +41,13 @@
 </template>
 
 <script>
-import banner from "@/api/banner"
 import Icon from "@/components/Icon"
 import CarouselItem from "@/views/Home/CarouselItem"
-import fetchData from "@/mixins/fetchData.js"
+import { mapState } from "vuex"
+
 
 
 export default {
-  mixins:[fetchData([])],
   components: {
     Icon,
     CarouselItem
@@ -56,7 +55,8 @@ export default {
   computed:{
     top(){
       return -this.index * this.containerHeight +"px"
-    }
+    },
+    ...mapState("banner",["loading", "data"])
   },
   data(){
     return{
@@ -68,11 +68,9 @@ export default {
     }
   },
   created() {
+    this.$store.dispatch("banner/fetchBanner")
   },
   methods: {
-    async fetchData(){
-      return await banner();
-    },
     trunTo(newIndex){
       if(this.data.length>0){
         if(newIndex >= this.data.length){
